@@ -4,8 +4,9 @@ import { StyleSheet, css } from 'aphrodite';
 // Declare styles for avatar
 const styles = StyleSheet.create({
   avatar: {
-    width: 40,
-    height: 40,
+    width: 60,
+    height: 60,
+    padding: 10,
     position: 'relative'
   },
 
@@ -16,12 +17,12 @@ const styles = StyleSheet.create({
 
   presence: {
     borderRadius: '50%',
-    width: 8,
-    height: 8,
+    width: 12,
+    height: 12,
     border: '2px solid #fff',
     position: 'absolute',
-    right: 0,
-    bottom: 0
+    right: 8,
+    bottom: 8
   }
 });
 
@@ -40,9 +41,7 @@ avatarTemplate.innerHTML = `
 export default class Avatar extends HTMLElement {
   constructor() {
     super();
-    let shadowRoot = this.attachShadow({
-      mode: 'open'
-    });
-    shadowRoot.appendChild(avatarTemplate.content.cloneNode(true));
+    this.appendChild(avatarTemplate.content.cloneNode(true));
+    this.style.display = 'inline-block';
   }
 }
