@@ -23,6 +23,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 8,
     bottom: 8
+  },
+
+  online: {
+    backgroundColor: '#78D700'
+  },
+
+  offline: {
+    backgroundColor: '#939EAE'
   }
 });
 
@@ -32,7 +40,7 @@ const avatarTemplate = document.createElement('template');
 avatarTemplate.innerHTML = `
   <figure class = "${css(styles.avatar)}">
     <img src="img/avatar.png" alt="Profile photo" class = "${css(styles['avatar-img'])}">
-    <span class="${css(styles.presence)}"></span>
+    <span class="presence-dot ${css(styles.presence, styles.offline)}"></span>
   </figure>
 `;
 
@@ -43,5 +51,22 @@ export default class Avatar extends HTMLElement {
     super();
     this.appendChild(avatarTemplate.content.cloneNode(true));
     this.style.display = 'inline-block';
+  }
+
+  // Attributes listed in this array are listened to for changes
+  static get observedAttributes() {
+    return ['presence'];
+  }
+
+  // Callback when attribute is changed
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch(name) {
+      case 'presence':
+        this.querySelector('.presence-dot').classList.add(`${css(styles[newValue])}`);
+        if(oldValue) {
+          this.querySelector('.presence-dot').classList.remove(`${css(styles[oldValue])}`);
+        }
+        break;
+    }
   }
 }
