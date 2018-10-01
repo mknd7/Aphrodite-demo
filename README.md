@@ -10,5 +10,9 @@ A simple demo which uses web components with Aphrodite
 
 ## Benefits of using Aphrodite
 
-* Styles are inlined with `!important`, so there is no chance of other styles overriding
-* Only styles required (specified in template) are injected
+* Styles are inlined with `!important`, so there is no chance of clashing styles overriding
+
+## Observations
+
+* With webcomponentsjs polyfill, works cross-browser
+* Firefox has a minor bug in its Devtools relating to web components - when we edit attribute in Devtools, attributeChangedCallback is not fired [Link](https://bugzilla.mozilla.org/show_bug.cgi?id=1449489)
