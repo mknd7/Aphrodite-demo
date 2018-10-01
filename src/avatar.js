@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     height: 12,
     border: '2px solid #fff',
     position: 'absolute',
-    right: 8,
-    bottom: 8
+    right: 10,
+    bottom: 10
   },
 
   online: {
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
 const avatarTemplate = document.createElement('template');
 avatarTemplate.innerHTML = `
   <figure class = "${css(styles.avatar)}">
-    <img src="img/avatar.png" alt="Profile photo" class = "${css(styles['avatar-img'])}">
-    <span class="${css(styles.presence, styles.offline)}"></span>
+    <img src = "" alt="Profile photo" class = "${css(styles['avatar-img'])}">
+    <span class="${css(styles.presence)}"></span>
   </figure>
 `;
 
@@ -52,12 +52,12 @@ export default class Avatar extends HTMLElement {
     this.appendChild(avatarTemplate.content.cloneNode(true));
   }
 
-  // Attributes listed in this array are listened to for changes
+  // Attributes in this array are listened to for changes
   static get observedAttributes() {
-    return ['presence'];
+    return ['presence', 'photo'];
   }
 
-  // Callback when attribute is changed
+  // Callback when an attribute is changed
   attributeChangedCallback(name, oldValue, newValue) {
     switch(name) {
       case 'presence':
@@ -65,6 +65,9 @@ export default class Avatar extends HTMLElement {
         if(oldValue) {
           this.querySelector('span').classList.remove(css(styles[oldValue]));
         }
+        break;
+      case 'photo':
+        this.querySelector('img').setAttribute('src', newValue);
         break;
     }
   }
