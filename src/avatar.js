@@ -61,10 +61,12 @@ export default class Avatar extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     switch(name) {
       case 'presence':
-        if(oldValue) {
+        if(oldValue && styles[oldValue]) {
           this.querySelector('span').classList.remove(css(styles[oldValue]));
         }
-        this.querySelector('span').classList.add(css(styles[newValue]));
+        if(newValue && styles[newValue]) {
+          this.querySelector('span').classList.add(css(styles[newValue]));
+        }
         break;
       case 'photo':
         this.querySelector('img').setAttribute('src', newValue);
